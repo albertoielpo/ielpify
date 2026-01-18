@@ -1,16 +1,13 @@
-import cors from "@fastify/cors";
+import { registerController } from "@albertoielpo/ielpify";
 import Fastify from "fastify";
-import "reflect-metadata";
-import { registerController } from "./decorators/route.decorator";
-import { HomeController } from "./home/home.controller";
+import { AnotherController } from "./controllers/another.controller";
+import { HomeController } from "./controllers/home.controller";
 
-const fastify = Fastify({ logger: false });
-
-// Enable CORS
-fastify.register(cors, { origin: true });
+const fastify = Fastify();
 
 // Register controllers
 registerController(fastify, HomeController);
+registerController(fastify, AnotherController);
 
 // Run the server!
 fastify.listen({ port: 3000 }, function (err, address) {

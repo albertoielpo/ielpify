@@ -26,9 +26,7 @@ export function registerService<T extends object>(
 }
 
 // Resolve a service from the container (creates if not exists)
-export function resolveService<T extends object>(
-    serviceClass: new () => T
-): T {
+export function resolveService<T extends object>(serviceClass: new () => T): T {
     if (!isInjectable(serviceClass)) {
         throw new Error(
             `${serviceClass.name} is not injectable. Add @Injectable() decorator.`
@@ -41,9 +39,7 @@ export function resolveService<T extends object>(
 }
 
 // Inject decorator - marks a constructor parameter for injection
-export function Inject(
-    serviceClass: new () => object
-): ParameterDecorator {
+export function Inject(serviceClass: new () => object): ParameterDecorator {
     return (target, propertyKey, parameterIndex) => {
         const existingInjections: Map<number, new () => object> =
             Reflect.getMetadata("injections", target) || new Map();

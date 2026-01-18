@@ -1,4 +1,0 @@
-###
-#
-GET http://localhost:3000/hello/world?par1=yes
-Accept: application/json

@@ -1,21 +1,20 @@
 {
     "compilerOptions": {
-        "moduleResolution": "node",
-        "declaration": true,
-        "declarationMap": true,
-        "removeComments": true,
+        "module": "commonjs",
+        "declaration": false,
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "allowSyntheticDefaultImports": true,
         "esModuleInterop": true,
         "target": "ES2021",
         "sourceMap": true,
-        "rootDir": "./src",
+        "outDir": "./dist",
+        "rootDir": "./",
         "baseUrl": "./",
         "strict": true,
         "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true
     },
-    "include": ["src/**/*"],
-    "exclude": ["node_modules", "dist", "example"]
+    "include": ["./**/*"],
+    "exclude": ["node_modules", "dist"]
 }

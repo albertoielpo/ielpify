@@ -1,0 +1,25 @@
+{
+    "name": "ielpify-example",
+    "version": "0.0.1",
+    "description": "Example application demonstrating @albertoielpo/ielpify usage",
+    "main": "dist/app.js",
+    "scripts": {
+        "build": "tsc",
+        "start": "node dist/app.js",
+        "dev": "tsc && node dist/app.js"
+    },
+    "author": "Alberto Ielpo",
+    "license": "MIT",
+    "dependencies": {
+        "@fastify/cors": "^11.2.0",
+        "fastify": "^5.7.1",
+        "reflect-metadata": "^0.2.2"
+    },
+    "devDependencies": {
+        "@types/node": "^22.0.0",
+        "typescript": "~5.9.2"
+    },
+    "engines": {
+        "node": ">=22"
+    }
+}
