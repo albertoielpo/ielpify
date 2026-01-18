@@ -4,28 +4,45 @@ const container = new Map<new () => object, object>();
 // Metadata key for marking classes as injectable
 const INJECTABLE_METADATA = Symbol("injectable");
 
-// Injectable decorator - marks a class as a singleton service
+/**
+ * Marks a class as a singleton service for dependency injection.
+ * Classes decorated with @Injectable() will have a single instance
+ * shared across all consumers.
+ * @returns A class decorator
+ */
 export function Injectable(): ClassDecorator {
     return (target) => {
         Reflect.defineMetadata(INJECTABLE_METADATA, true, target);
     };
 }
 
-// Check if a class is injectable
+/**
+ * Checks if a class is decorated with @Injectable().
+ * @param target - The class to check
+ * @returns True if the class is injectable, false otherwise
+ */
 export function isInjectable(target: new () => object): boolean {
     return Reflect.getMetadata(INJECTABLE_METADATA, target) === true;
 }
 
-// Register a service in the container
+/**
+ * Registers a service in the DI container.
+ * If the service is not already registered, it will be instantiated.
+ * @param serviceClass - The service class to register
+ */
 export function registerService<T extends object>(
     serviceClass: new () => T
 ): void {
-    if (!container.has(serviceClass)) {
-        container.set(serviceClass, new serviceClass());
-    }
+    resolveService(serviceClass);
 }
 
-// Resolve a service from the container (creates if not exists)
+/**
+ * Resolves a service from the DI container.
+ * Creates a new instance if the service is not already registered.
+ * @param serviceClass - The service class to resolve
+ * @returns The singleton instance of the service
+ * @throws Error if the class is not decorated with @Injectable()
+ */
 export function resolveService<T extends object>(serviceClass: new () => T): T {
     if (!isInjectable(serviceClass)) {
         throw new Error(
@@ -38,7 +55,11 @@ export function resolveService<T extends object>(serviceClass: new () => T): T {
     return container.get(serviceClass) as T;
 }
 
-// Inject decorator - marks a constructor parameter for injection
+/**
+ * Marks a constructor parameter for dependency injection.
+ * @param serviceClass - The service class to inject
+ * @returns A parameter decorator
+ */
 export function Inject(serviceClass: new () => object): ParameterDecorator {
     return (target, propertyKey, parameterIndex) => {
         const existingInjections: Map<number, new () => object> =
@@ -48,9 +69,12 @@ export function Inject(serviceClass: new () => object): ParameterDecorator {
     };
 }
 
-// Create an instance with dependencies injected
+/**
+ * Creates an instance of a class with its dependencies automatically injected.
+ * @param targetClass - The class to instantiate
+ * @returns A new instance with all @Inject() dependencies resolved
+ */
 export function createWithInjection<T extends object>(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     targetClass: new (...args: any[]) => T
 ): T {
     const injections: Map<number, new () => object> =
@@ -63,4 +87,13 @@ export function createWithInjection<T extends object>(
     });
 
     return new targetClass(...args);
+}
+
+/**
+ * Returns all instances currently stored in the DI container.
+ * Useful for applying lifecycle operations to all services.
+ * @returns An array of all registered service instances
+ */
+export function getContainerInstances(): object[] {
+    return Array.from(container.values());
 }

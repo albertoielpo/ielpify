@@ -21,7 +21,11 @@ type RouteDefinition = {
     handlerName: string;
 };
 
-// Controller decorator
+/**
+ * Marks a class as a controller with an optional route prefix.
+ * @param prefix - The base path prefix for all routes in this controller
+ * @returns A class decorator
+ */
 export function Controller(prefix: string = ""): ClassDecorator {
     return (target) => {
         Reflect.defineMetadata(
@@ -58,23 +62,59 @@ function createMethodDecorator(method: RouteDefinition["method"]) {
     };
 }
 
-// HTTP method decorators
+/**
+ * Marks a method as a GET route handler.
+ * @param path - The route path (optional)
+ * @returns A method decorator
+ */
 export const Get = createMethodDecorator("get");
+
+/**
+ * Marks a method as a POST route handler.
+ * @param path - The route path (optional)
+ * @returns A method decorator
+ */
 export const Post = createMethodDecorator("post");
+
+/**
+ * Marks a method as a PUT route handler.
+ * @param path - The route path (optional)
+ * @returns A method decorator
+ */
 export const Put = createMethodDecorator("put");
+
+/**
+ * Marks a method as a DELETE route handler.
+ * @param path - The route path (optional)
+ * @returns A method decorator
+ */
 export const Delete = createMethodDecorator("delete");
+
+/**
+ * Marks a method as a PATCH route handler.
+ * @param path - The route path (optional)
+ * @returns A method decorator
+ */
 export const Patch = createMethodDecorator("patch");
 
 // Controller class type
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type ControllerClass = new (...args: any[]) => object;
 
-// Register controller routes with Fastify
+// Store registered controller instances
+const controllerInstances: object[] = [];
+
+/**
+ * Registers a controller with a Fastify instance.
+ * Creates the controller with dependency injection and sets up all routes.
+ * @param fastify - The Fastify instance
+ * @param controllerClass - The controller class to register
+ */
 export function registerController(
     fastify: FastifyInstance,
     controllerClass: ControllerClass
 ): void {
     const controller = createWithInjection(controllerClass);
+    controllerInstances.push(controller);
     const prefix: string =
         Reflect.getMetadata(CONTROLLER_PREFIX, controllerClass) || "";
     const routes: RouteDefinition[] =
@@ -88,4 +128,13 @@ export function registerController(
 
         fastify[route.method](fullPath, handler);
     }
+}
+
+/**
+ * Returns all registered controller instances.
+ * Useful for applying lifecycle operations to all controllers.
+ * @returns An array of all registered controller instances
+ */
+export function getControllerInstances(): object[] {
+    return controllerInstances;
 }

@@ -1,4 +1,4 @@
-import { Injectable } from "@albertoielpo/ielpify";
+import { Injectable, Timeout } from "@albertoielpo/ielpify";
 
 /**
  * This service is decorated with @Injectable(), making it a singleton.
@@ -24,5 +24,14 @@ export class ExampleInjectableService {
      */
     getInstanceId(): number {
         return this.createdAt;
+    }
+
+    /**
+     * Example of the @Timeout decorator.
+     * Executes 3 times, with a 5-second delay between each execution.
+     */
+    @Timeout({ ms: 5000, times: 3 })
+    timeoutExample(): void {
+        console.log(`Execute timeout at ${Date.now()}`);
     }
 }
