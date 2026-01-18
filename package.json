@@ -1,6 +1,6 @@
 {
     "name": "@albertoielpo/ielpify",
-    "version": "0.0.1",
+    "version": "0.1.0",
     "description": "A simplified way to build Fastify applications using decorators, inspired by NestJS",
     "main": "dist/cjs/index.js",
     "module": "dist/esm/index.js",
@@ -24,6 +24,7 @@
         "build": "npm run build:cjs && npm run build:esm",
         "build:cjs": "tsc -p tsconfig.cjs.json",
         "build:esm": "tsc -p tsconfig.esm.json",
+        "prepublish": "npm run build",
         "format": "prettier --write \"src/**/*.ts\""
     },
     "keywords": [
@@ -36,7 +37,7 @@
         "controllers",
         "routing"
     ],
-    "author": "Alberto Ielpo",
+    "author": "Alberto Ielpo <alberto.ielpo@gmail.com>",
     "license": "MIT",
     "repository": {
         "type": "git",
@@ -47,14 +48,14 @@
         "reflect-metadata": ">=0.1.0"
     },
     "devDependencies": {
-        "@types/node": "^22.0.0",
-        "fastify": "^5.7.1",
+        "@types/node": "^24.0.0",
+        "fastify": "~5.7.1",
         "prettier": "~3.6.2",
-        "reflect-metadata": "^0.2.2",
+        "reflect-metadata": "~0.2.2",
         "typescript": "~5.9.2"
     },
     "engines": {
-        "node": ">=22",
-        "npm": ">=10"
+        "node": ">=24",
+        "npm": ">=11"
     }
 }

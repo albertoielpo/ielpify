@@ -1,6 +1,6 @@
 {
     "name": "ielpify-example",
-    "version": "0.0.1",
+    "version": "0.1.0",
     "description": "Example application demonstrating @albertoielpo/ielpify usage",
     "main": "dist/app.js",
     "scripts": {
@@ -11,15 +11,16 @@
     "author": "Alberto Ielpo",
     "license": "MIT",
     "dependencies": {
-        "@fastify/cors": "^11.2.0",
-        "fastify": "^5.7.1",
-        "reflect-metadata": "^0.2.2"
+        "@albertoielpo/ielpify": "^0.1.0",
+        "fastify": "~5.7.1",
+        "reflect-metadata": "~0.2.2"
     },
     "devDependencies": {
-        "@types/node": "^22.0.0",
+        "@types/node": "^24.10.9",
         "typescript": "~5.9.2"
     },
     "engines": {
-        "node": ">=22"
+        "node": ">=24",
+        "npm": ">=11"
     }
 }
