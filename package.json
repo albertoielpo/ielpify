@@ -39,9 +39,12 @@
     ],
     "author": "Alberto Ielpo <alberto.ielpo@gmail.com>",
     "license": "MIT",
+    "publishConfig": {
+        "access": "public"
+    },
     "repository": {
         "type": "git",
-        "url": "https://github.com/ielpo/ielpify.git"
+        "url": "git+https://github.com/ielpo/ielpify.git"
     },
     "peerDependencies": {
         "fastify": ">=5.0.0",
